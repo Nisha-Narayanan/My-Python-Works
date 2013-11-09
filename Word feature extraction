@@ -1,0 +1,48 @@
+# Function for wrting contents to a file.
+# Parameter 1 - filename: Name of the file to be opened
+# Parameter 2 - word    : input for file write operation
+import re
+def WriteToFile(filename,word):
+        words=[]
+        fp=open(filename)
+        for line in fp:
+                for item in line.split():
+                        words.append(item)
+        fp.close()
+        fp= open(filename,'a')
+        if word not in words:
+                fp.write( word )
+                fp.write('\n')
+        fp.close()
+decision ='y'
+while( decision == 'y'):
+        print "MENU \n 1.Find words which starts with \n 2.Find words which ends with"
+        choice = input("Enter your choice:")
+        filename = ''
+        # Read the affix from user and create file with name as affix
+        if choice == 1:
+                prefix = raw_input("Enter prefix:")
+                filename = prefix+'.txt'
+        elif choice == 2:
+                suffix = raw_input("Enter sufix:")
+                filename = suffix+'.txt'
+        fp = open(filename,'w')
+        fp.close()
+        documentname =raw_input("Enter document name:")
+        # Update the file named affix with word in document if that word contains user specified affix
+	text = open(documentname).read()
+	#print text
+	word_list = re.findall("\w+",text)
+        for word in word_list:
+		file_name = ''
+		if( choice == 1 ):
+                	file_name = prefix+'.txt'
+                        if(word.startswith(prefix)):
+                        	WriteToFile(file_name,word)
+               	if( choice == 2 ):
+                	file_name = suffix+'.txt'
+                        if(word.endswith(suffix)):
+                                WriteToFile(file_name,word)	
+        decision = raw_input("Do you want to continue ? y/n:")
+
+		
